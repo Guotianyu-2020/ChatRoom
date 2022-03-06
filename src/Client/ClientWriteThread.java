@@ -1,10 +1,8 @@
 package Client;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ClientWriteThread {
     private Socket socket;
@@ -15,10 +13,14 @@ public class ClientWriteThread {
 
     public void write() {
         try {
-            OutputStream os = this.socket.getOutputStream();
-            Scanner sc = new Scanner(System.in);
-            String s = sc.next();
-            os.write(s.getBytes());
+            if (ClientGUI.words != null) {
+                OutputStream os = this.socket.getOutputStream();
+                os.write(ClientGUI.words.getBytes());
+                ClientGUI.outputs.append("\n");
+                ClientGUI.outputs.append(ClientGUI.words);
+                ClientGUI.inputs.setText("");
+                ClientGUI.words = null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

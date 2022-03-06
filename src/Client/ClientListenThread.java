@@ -17,7 +17,11 @@ public class ClientListenThread {
             is = this.socket.getInputStream();
             byte[] bytes = new byte[1024];
             int len = is.read(bytes);
-            System.out.println(new String(bytes, 0, len));
+            String s = new String(bytes, 0, len);
+            if (s != null) {
+                ClientGUI.outputs.append("\n");
+                ClientGUI.outputs.append(s);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
