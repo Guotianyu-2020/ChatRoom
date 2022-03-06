@@ -22,3 +22,16 @@ Create a chatroom with Java
 
 ​		MySQL目录下InsertMessage封装了插入方法，将服务器监听到的内容存入数据库表中
 
+#### **2022.3.6 Version2**
+
+此版本实现的功能有：在Version1的技术上添加了可视化界面，为每个客户设置单独的输入框和输出框，如图
+
+![image](https://user-images.githubusercontent.com/78852879/156927840-f50819ad-b490-4019-9be4-72c16addda16.png)
+
+此版本使用到的知识有：swing界面设计，多线程
+
+未来版本展望：优化界面设计，设置群聊天，设置登录和注册功能
+
+项目结构：
+
+Client目录下两个客户端文件各自新增了界面线程，新增ClientGUI.java界面文件
