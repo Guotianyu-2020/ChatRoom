@@ -12,8 +12,8 @@ public class TCPClient2 {
 
 
     public static void runClient2(Socket socket) {
-        ClientWriteThread cwt = new ClientWriteThread(socket);
-        ClientListenThread clt = new ClientListenThread(socket);
+        ClientWriteThread cwt = new ClientWriteThread(socket, "Client2");
+        ClientListenThread clt = new ClientListenThread(socket, "Client1");
         new Thread(() -> {
             while (!socket.isClosed()) {
                 clt.listen();

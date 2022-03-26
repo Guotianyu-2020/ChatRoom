@@ -6,9 +6,11 @@ import java.net.Socket;
 
 public class ClientListenThread {
     private Socket socket;
+    private String ClientName;
 
-    public ClientListenThread(Socket socket) {
+    public ClientListenThread(Socket socket, String ClientName) {
         this.socket = socket;
+        this.ClientName = ClientName;
     }
 
     public void listen() {
@@ -19,7 +21,8 @@ public class ClientListenThread {
             int len = is.read(bytes);
             String s = new String(bytes, 0, len);
             if (s != null) {
-                ClientGUI.outputs.append("\n");
+
+                ClientGUI.outputs.append("\r\n" + "Message from : " + this.ClientName + "\r\n");
                 ClientGUI.outputs.append(s);
             }
         } catch (IOException e) {
