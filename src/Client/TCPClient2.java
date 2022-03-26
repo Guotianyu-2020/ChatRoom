@@ -12,26 +12,25 @@ public class TCPClient2 {
 
 
     public static void runClient2(Socket socket) {
+        ClientGUI client2 = new ClientGUI();
         ClientWriteThread cwt = new ClientWriteThread(socket, "Client2");
         ClientListenThread clt = new ClientListenThread(socket, "Client1");
         new Thread(() -> {
             while (!socket.isClosed()) {
-                clt.listen();
+                clt.listen(client2);
             }
         }).start();
 
         new Thread(() -> {
             while (!socket.isClosed()) {
                 if (ClientGUI.words != null) {
-                    cwt.write();
+                    cwt.write(client2);
                 }
             }
         }).start();
 
-
-        EventQueue.invokeLater(()->{
-            ClientGUI.runGUI();
-            ClientGUI.frame.setTitle("Client2");
-        });
+        new Thread(() -> {
+            client2.runGUI("Client2");
+        }).start();
     }
 }

@@ -53,11 +53,11 @@ public class CreateAccountGUI extends LoginGUI{
                     try {
                         LoginThread.login();
                         jf.dispose();
-                    } catch (IOException ex) {
+                    } catch (IOException | InterruptedException ex) {
                         ex.printStackTrace();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "User not found", "Notice", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Something wrong", "Notice", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });

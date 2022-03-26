@@ -12,12 +12,13 @@ public class TCPClient1 {
 
 
     public static void runClient1(Socket socket) {
+        ClientGUI client1 = new ClientGUI();
         ClientWriteThread cwt = new ClientWriteThread(socket, "Client1");
         ClientListenThread clt = new ClientListenThread(socket, "Client2");
         // 听线程
         new Thread(() -> {
             while (!socket.isClosed()) {
-                clt.listen();
+                clt.listen(client1);
             }
         }).start();
 
@@ -26,16 +27,13 @@ public class TCPClient1 {
         new Thread(() -> {
             while (!socket.isClosed()) {
                 if (ClientGUI.words != null) {
-                    cwt.write();
+                    cwt.write(client1);
                 }
             }
         }).start();
 
-
-        // GUI界面
-        EventQueue.invokeLater(()->{
-            ClientGUI.runGUI();
-            ClientGUI.frame.setTitle("Client1");
-        });
+        new Thread(() -> {
+            client1.runGUI("Client1");
+        }).start();
     }
 }

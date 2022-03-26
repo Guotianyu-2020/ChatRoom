@@ -13,14 +13,14 @@ public class ClientWriteThread {
         this.ClientName = ClientName;
     }
 
-    public void write() {
+    public void write(ClientGUI client) {
         try {
             if (ClientGUI.words != null) {
                 OutputStream os = this.socket.getOutputStream();
                 os.write(ClientGUI.words.getBytes());
-                ClientGUI.outputs.append("\r\n" + this.ClientName + " : \r\n");
-                ClientGUI.outputs.append("\r\n" + ClientGUI.words);
-                ClientGUI.inputs.setText("");
+                client.outputs.append("\r\n" + this.ClientName + " :");
+                client.outputs.append("\r\n" + ClientGUI.words);
+                client.inputs.setText("");
                 ClientGUI.words = null;
             }
         } catch (IOException e) {

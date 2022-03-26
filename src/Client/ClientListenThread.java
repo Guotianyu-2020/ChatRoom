@@ -13,7 +13,7 @@ public class ClientListenThread {
         this.ClientName = ClientName;
     }
 
-    public void listen() {
+    public void listen(ClientGUI client) {
         InputStream is;
         try {
             is = this.socket.getInputStream();
@@ -21,9 +21,8 @@ public class ClientListenThread {
             int len = is.read(bytes);
             String s = new String(bytes, 0, len);
             if (s != null) {
-
-                ClientGUI.outputs.append("\r\n" + "Message from : " + this.ClientName + "\r\n");
-                ClientGUI.outputs.append(s);
+                client.outputs.append("\r\n" + "Message from : " + this.ClientName + "\r\n");
+                client.outputs.append(s);
             }
         } catch (IOException e) {
             e.printStackTrace();

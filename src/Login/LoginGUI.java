@@ -68,7 +68,7 @@ public class LoginGUI {
                     try {
                         LoginThread.login();
                         jf.dispose();
-                    } catch (IOException ex) {
+                    } catch (IOException | InterruptedException ex) {
                         ex.printStackTrace();
                     }
                 } else {

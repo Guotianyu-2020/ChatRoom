@@ -8,14 +8,15 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class ClientGUI {
-    static JFrame frame = new JFrame();
     static String words;
-    static JTextArea inputs = new JTextArea(15, 30);
-    static JTextArea outputs = new JTextArea("消息：", 15, 30);
+    JTextArea inputs = new JTextArea(15, 30);
+    JTextArea outputs = new JTextArea("消息：", 15, 30);
 
-    public static void runGUI(){
-
+    public void runGUI(String name){
         // 初始化界面和组件
+        JFrame frame = new JFrame();
+
+        frame.setTitle(name);
         JButton button = new JButton("发送");
         JPanel jp = new JPanel();
         JPanel jp2 = new JPanel();
@@ -49,7 +50,7 @@ public class ClientGUI {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ClientGUI.words = ClientGUI.inputs.getText();
+                ClientGUI.words = inputs.getText();
             }
         });
         inputs.addKeyListener(new KeyAdapter() {
@@ -58,7 +59,7 @@ public class ClientGUI {
                 if (e.getKeyChar() == KeyEvent.VK_ENTER)
                 {
                     //此处为要按下回车后触发的动作，应与按下登录按钮后实现的功能相同
-                    ClientGUI.words = ClientGUI.inputs.getText();
+                    ClientGUI.words = inputs.getText();
                 }
             }
         });
