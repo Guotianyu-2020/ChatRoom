@@ -42,13 +42,13 @@ Client目录下两个客户端文件各自新增了界面线程，新增ClientGU
 
 ​		登录与注册界面如下图所示
 
-![image-20220328213721454](README/image-20220328213721454.png)
+![image-20220328213721454](https://user-images.githubusercontent.com/78852879/160412024-1d3ba491-8309-458b-b91e-39cbf4b957f7.png)
 
 ​		未注册点击登录会弹出警告
 
 ​		信息来源显示如下图所示
 
-![image-20220328214034247](README/image-20220328214034247.png)
+![image-20220328214034247](https://user-images.githubusercontent.com/78852879/160412070-c3442932-ee7b-4bc5-8e76-fd57933d5d23.png)
 
 未来版本展望：增加多个用户，可以选择性建立连接，优化GUI界面
 
