@@ -35,3 +35,26 @@ Create a chatroom with Java
 项目结构：
 
 Client目录下两个客户端文件各自新增了界面线程，新增ClientGUI.java界面文件
+
+#### 2020.3.26 Version3
+
+此版本实现的功能有：1.增加了登录与注册功能，注册用户直接写入服务器的数据库 2.增加了信息来源显示功能
+
+​		登录与注册界面如下图所示
+
+![image-20220328213721454](README/image-20220328213721454.png)
+
+​		未注册点击登录会弹出警告
+
+​		信息来源显示如下图所示
+
+![image-20220328214034247](README/image-20220328214034247.png)
+
+未来版本展望：增加多个用户，可以选择性建立连接，优化GUI界面
+
+项目结构：
+
+​		在原来的src文件夹中新增了Login子目录，用以存放登录界面、线程有关内容。CreateAccountGUI是创建用户时的GUI文件，LoginGUI是登陆界面，LoginThread是登陆线程，LoginMain是登录的主方法。同时MySQL文件中CreateAccount和CheckAccount文件分别用以在数据库中创建用户和检查用户是否存在。
+
+​		项目开启方法：先开始服务器TCPServer，然后开启登录主方法LoginMain即可。
+
