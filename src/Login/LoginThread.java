@@ -1,13 +1,12 @@
 package Login;
 
-import Client.TCPClient1;
-import Client.TCPClient2;
+import Client.TCPClient;
 
 import java.io.IOException;
+import java.net.Socket;
 
 public class LoginThread {
-    public static void login() throws IOException, InterruptedException {
-        TCPClient1.main(null);
-        TCPClient2.main(null);
+    public static void login(String clientName) throws IOException, InterruptedException {
+        TCPClient client = new TCPClient(new Socket("192.168.158.61", 8888), clientName);
     }
 }

@@ -19,7 +19,7 @@ public class InsertMessage {
             // 4.获取执行sql的对象
             stmt = conn.createStatement();
             // 5.执行sql
-            int count = stmt.executeUpdate(sql);
+            stmt.executeUpdate(sql);
             // 6.处理结果
             System.out.println("已写入数据库");
         } catch (ClassNotFoundException | SQLException e) {

@@ -21,11 +21,7 @@ public class CreateAccount {
             // 5.执行sql
             int count = stmt.executeUpdate(sql);
             // 6.处理结果
-            if (count == 1) {
-                return true;
-            } else {
-                return false;
-            }
+            return count == 1;
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {

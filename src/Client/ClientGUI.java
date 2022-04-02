@@ -47,12 +47,7 @@ public class ClientGUI {
         // 设置可见
         frame.setVisible(true);
         // 事件触发不需要单独设置一个线程，放到GUI线程就行
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ClientGUI.words = inputs.getText();
-            }
-        });
+        button.addActionListener(e -> ClientGUI.words = inputs.getText());
         inputs.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {

@@ -1,17 +1,13 @@
 package Login;
 
-import MySQL.CreateAccount;
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 
 public class CreateAccountGUI extends LoginGUI{
     static String rName;
     static char[] rPassword;
-    public static void runCreate() {
+    public static void runCreate(WriteAndListen wl) {
 
         JFrame jf = new JFrame("Login");
         JButton register = new JButton("Register");
@@ -43,22 +39,31 @@ public class CreateAccountGUI extends LoginGUI{
         Add_Component(jf, layout, register, gbc,2,5,1,1,0,0);
         jf.setVisible(true);
 
-        register.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rName = username.getText();
-                rPassword = password.getPassword();
-                boolean check = CreateAccount.createAccount(rName, rPassword);
-                if (check) {
-                    try {
-                        LoginThread.login();
-                        jf.dispose();
-                    } catch (IOException | InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Something wrong", "Notice", JOptionPane.ERROR_MESSAGE);
+        register.addActionListener(e -> {
+            rName = username.getText();
+            rPassword = password.getPassword();
+            // 向服务器发送查询请求
+            try {
+                wl.write(rName, new String(rPassword), "create");
+            } catch (IOException | InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            String check = null;
+            try {
+                check = wl.listen();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            assert check != null;
+            if (!check.equals("0")) {
+                try {
+                    LoginThread.login(rName);
+                    jf.dispose();
+                } catch (IOException | InterruptedException ex) {
+                    ex.printStackTrace();
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Something wrong", "Notice", JOptionPane.ERROR_MESSAGE);
             }
         });
     }

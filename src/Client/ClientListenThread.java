@@ -8,9 +8,14 @@ public class ClientListenThread {
     private Socket socket;
     private String ClientName;
 
-    public ClientListenThread(Socket socket, String ClientName) {
+    // 设置对方名字
+
+    public void setClientName(String clientName) {
+        ClientName = clientName;
+    }
+
+    public ClientListenThread(Socket socket) {
         this.socket = socket;
-        this.ClientName = ClientName;
     }
 
     public void listen(ClientGUI client) {
@@ -20,10 +25,8 @@ public class ClientListenThread {
             byte[] bytes = new byte[1024];
             int len = is.read(bytes);
             String s = new String(bytes, 0, len);
-            if (s != null) {
-                client.outputs.append("\r\n" + "Message from : " + this.ClientName + "\r\n");
-                client.outputs.append(s);
-            }
+            client.outputs.append("\r\n" + "Message from : " + this.ClientName + "\r\n");
+            client.outputs.append(s);
         } catch (IOException e) {
             e.printStackTrace();
         }

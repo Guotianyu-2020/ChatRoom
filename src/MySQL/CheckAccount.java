@@ -1,13 +1,11 @@
 package MySQL;
 
-import Client.TCPClient1;
-import Client.TCPClient2;
-
-import java.io.IOException;
 import java.sql.*;
 
 public class CheckAccount {
-    public static boolean checkAccount(String username, char[] password) {
+    public static boolean checkAccount(String username, String password) {
+        System.out.println(username);
+        System.out.println(password);
         Statement stmt = null;
         Connection conn = null;
         ResultSet rs = null;
@@ -15,8 +13,7 @@ public class CheckAccount {
             // 1.注册驱动
             Class.forName("com.mysql.cj.jdbc.Driver");
             // 2.定义sql
-            String p = new String(password);
-            String sql = "select * from user where username = '" + username +"' and password = '" + p +"';";
+            String sql = "select * from user where username = '" + username +"' and password = '" + password +"';";
             // 3.获取Connection对象
             conn = DriverManager.getConnection("jdbc:mysql:///chatroom", "root", "200818");
             // 4.获取执行sql的对象
@@ -24,13 +21,7 @@ public class CheckAccount {
             // 5.执行sql
             rs = stmt.executeQuery(sql);
             // 6.处理结果
-            if (rs.next()) {
-                // 查到数据
-                return true;
-            } else {
-                // 未查到数据
-                return false;
-            }
+            return rs.next();
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         } finally {

@@ -6,7 +6,7 @@ import java.net.Socket;
 
 public class ClientWriteThread {
     private Socket socket;
-    private String ClientName;
+    private final String ClientName;
 
     public ClientWriteThread(Socket socket, String ClientName) {
         this.socket = socket;
@@ -23,6 +23,16 @@ public class ClientWriteThread {
                 client.inputs.setText("");
                 ClientGUI.words = null;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void uploadMyName(String name) {
+        try {
+            OutputStream os = this.socket.getOutputStream();
+            os.write(name.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }

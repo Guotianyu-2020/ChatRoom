@@ -1,8 +1,5 @@
 package Login;
 
-import Client.TCPClient1;
-import MySQL.CheckAccount;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,7 +9,7 @@ import java.io.IOException;
 public class LoginGUI {
     public static String rName;
     public static char[] rPassword;
-    public static void runLoginGUi() {
+    public static void runLoginGUi() throws IOException {
         JFrame jf = new JFrame("Login");
         JButton login_now = new JButton("Login now");
         JButton register = new JButton("Register");
@@ -49,41 +46,46 @@ public class LoginGUI {
         Add_Component(jf, layout, quit, gbc,4,5,1,1,0,0);
         jf.setVisible(true);
 
+
+        WriteAndListen wl = new WriteAndListen();
+
         // 事件触发：退出按钮
-        quit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
+        quit.addActionListener(e -> System.exit(0));
 
         // 事件触发：登录
-        login_now.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rName = username.getText();
-                rPassword = password.getPassword();
-                boolean check = CheckAccount.checkAccount(rName, rPassword);
-                if (check) {
-                    try {
-                        LoginThread.login();
-                        jf.dispose();
-                    } catch (IOException | InterruptedException ex) {
-                        ex.printStackTrace();
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "User not found", "Notice", JOptionPane.ERROR_MESSAGE);
+        login_now.addActionListener(e -> {
+            rName = username.getText();
+            rPassword = password.getPassword();
+            // 向服务器发送查询请求
+            try {
+                wl.write(rName, new String(rPassword), "check");
+            } catch (IOException | InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            // 接收服务器的回答
+            String check = null;
+            try {
+                check = wl.listen();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            if (!check.equals("0")) {
+                try {
+                    wl.closeSocket();
+                    LoginThread.login(rName);
+                    jf.dispose();
+                } catch (IOException | InterruptedException ex) {
+                    ex.printStackTrace();
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "User not found", "Notice", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         // 事件触发：注册
-        register.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                CreateAccountGUI.runCreate();
-                jf.dispose();
-            }
+        register.addActionListener(e -> {
+            CreateAccountGUI.runCreate(wl);
+            jf.dispose();
         });
     }
 
